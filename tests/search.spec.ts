@@ -1,16 +1,16 @@
 import { test, expect } from '@playwright/test';
 
-test('Realizar una busqueda que no tenga resultados', async ({ page }) => {
-  await page.goto('https://playwright.dev/docs/intro');
+test.beforeEach(async ({ page }) => {
+  await page.goto('/');
+});
 
+test('Realizar una busqueda que no tenga resultados', async ({ page }) => {
   await page.getByRole('button', { name: 'Search' }).click();
-  // role=button[name="Search"
 
   await page.getByPlaceholder('Search docs').click();
 
   await page.getByPlaceholder('Search docs').fill('hascontent');
 
-  // .DocSearch-NoResults p
   await expect(page.locator('.DocSearch-NoResults p')).toBeVisible();
 
   await expect(page.locator('.DocSearch-NoResults p')).toHaveText('No results for "hascontent"');
@@ -18,10 +18,7 @@ test('Realizar una busqueda que no tenga resultados', async ({ page }) => {
 })
 
 test('Limpiar el input de busqueda', async ({ page }) => {
-  await page.goto('https://playwright.dev/docs/intro');
-
   await page.getByRole('button', { name: 'Search' }).click();
-  // role=button[name="Search"
 
   const searchBox = page.getByPlaceholder('Search docs');
 
@@ -37,10 +34,7 @@ test('Limpiar el input de busqueda', async ({ page }) => {
 });
 
 test('Realizar una busqueda que genere al menos tenga un resultado', async ({ page }) => {
-  await page.goto('https://playwright.dev/docs/intro');
-
   await page.getByRole('button', { name: 'Search' }).click();
-  // role=button[name="Search"
 
   const searchBox = page.getByPlaceholder('Search docs');
 
